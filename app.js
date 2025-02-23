@@ -18,7 +18,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then((respuesta) => {
 }).catch((error) => {
     console.log(error)
 }) 
-console.log("hola mundo ")
+
 app.use("/", express.static(__dirname + "/pagina"))
 
 app.listen(config.puertoExpress, function(){
