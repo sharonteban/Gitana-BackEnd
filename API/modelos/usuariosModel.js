@@ -9,7 +9,8 @@ var usuariosschema = new schema({
     apellido:String,
     password:String,
     estado:String,
-    codigo:String
+    codigo:String,
+    perfil:String
 }) 
 
 const Mymodel = mongoose.model("usuarios", usuariosschema)
@@ -23,6 +24,7 @@ usuariosModel.save = function(post, callback){
     instancia.password = post.password
     instancia.estado = post.estado
     instancia.codigo = post.codigo
+    instancia.perfil = 'cliente'
 
     instancia.save().then((respuesta) => {
         return callback({state:true,})
@@ -31,17 +33,6 @@ usuariosModel.save = function(post, callback){
         return callback({state:false,})
     })
 }
-
-
-// usuariosModel.login = function(post, callback){
-//     Mymodel.find({email:post.email,password:post.password}, {nombre:1, apellido:1,estado:1}).then((respuesta) => {
-//         console.log("----------------->")
-//         return callback(respuesta)
-//     }).catch((error) => {
-//         console.log(error)
-//         return callback({})
-//     })  /// 
-// }
 
 usuariosModel.buscarEmail = function(post, callback){
     Mymodel.findOne({email:post.email}).then((respuesta) => {
@@ -55,7 +46,9 @@ usuariosModel.buscarEmail = function(post, callback){
 usuariosModel.update = function(post, callback){
    Mymodel.findOneAndUpdate({email:post.email},{
     nombre: post.nombre,
-    apellido: post.apellido
+    apellido: post.apellido,
+    perfil: post.perfil,
+    estado: post.estado
 }).then((respuesta) => {
     return callback({state:true})
 }).catch((error) => {
@@ -77,6 +70,7 @@ usuariosModel.delete = function(post, callback){
 usuariosModel.listar = function(post, callback){
     Mymodel.find({},{password:0,codigo:0}).then((respuesta) => {
         return callback(respuesta)
+        
     }).catch((error) => {
         console.log(error)
         return callback({})
@@ -84,7 +78,7 @@ usuariosModel.listar = function(post, callback){
 }
 
 usuariosModel.login = function(post, callback){
-    Mymodel.find({email:post.email,password:post.password},{nombre:1,apellido:1,estado:1}).then((respuesta) => {
+    Mymodel.find({email:post.email,password:post.password},{_id:1,nombre:1,apellido:1,estado:1, perfil:1}).then((respuesta) => {
         return callback(respuesta)
     }).catch((error) => {
         console.log(error)

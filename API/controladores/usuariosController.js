@@ -75,7 +75,7 @@ usuariosController.save = function(request, response){
                             <label for="codigo" style="display: block; margin-bottom: 8px; font-weight: bold;">Código de Activación:</label>
                             <div id="codigo" name="codigo" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; background: white;">${post.codigo}</div>
                             
-                            <a href="http://localhost:3000/usuarios/activar/${post.email}/${post.codigo}" style="display: block; width: 100%; text-align: center; background: #007bff; color: white; padding: 10px; border-radius: 4px; text-decoration: none;">Activar Cuenta</a>
+                            <a href="http://localhost:4200/activar/${post.email}/${post.codigo}" style="display: block; width: 100%; text-align: center; background: #007bff; color: white; padding: 10px; border-radius: 4px; text-decoration: none;">Activar Cuenta</a>
                             </form>
                     </body>`
             }
@@ -139,7 +139,11 @@ usuariosController.login = function(request, response){
             if(respuesta[0].estado == 'inactivo'){
                response.json({state:false,mensaje:"Por favor active la cuenta con el codigo de su email"})
             }
-            else{
+            else{                
+                request.session.nombre = respuesta[0].nombre + "  " + respuesta[0].apellido
+                request.session._id = respuesta[0]._id
+                request.session.perfil = respuesta[0].perfil
+
                 response.json({state:true,mensaje:"Bienvenido:" + respuesta[0].nombre + "  " + respuesta[0].apellido})
             }
 
@@ -151,8 +155,8 @@ usuariosController.login = function(request, response){
 usuariosController.activar = function(request, response){
 
     var post ={
-        email:request.params.email,
-        codigo:request.params.codigo,
+        email:request.body.email,
+        codigo:request.body.codigo,
         
     }
 
@@ -171,7 +175,7 @@ usuariosController.activar = function(request, response){
             response.json({state:false, mensaje:"no se pudo activar la cuenta"})
         }
         else{
-           response.json({state:false, mensaje:"cuenta activada correctamente"})
+           response.json({state:true, mensaje:"cuenta activada correctamente"})
         }   
         
     })
@@ -182,6 +186,8 @@ usuariosController.update = function(request, response){
         email:request.body.email,
         nombre:request.body.nombre,
         apellido:request.body.apellido,
+        perfil:request.body.perfil,
+        estado:request.body.estado
     }
 
     if(post.email == "" || post.email == undefined || post.email == null){       //verificacion de campo obligatorio 
@@ -196,6 +202,16 @@ usuariosController.update = function(request, response){
 
     if(post.apellido == "" || post.apellido == undefined || post.apellido == null){
         response.json({mensaje:"El campo apellido es obligatorio", state:false})
+        return false
+    }
+
+    if(post.perfil == "" || post.perfil == undefined || post.perfil == null){
+        response.json({mensaje:"El campo Perfil es obligatorio", state:false})
+        return false
+    }
+
+    if(post.estado == "" || post.estado == undefined || post.estado == null){
+        response.json({mensaje:"El campo Estado es obligatorio", state:false})
         return false
     }
 
@@ -259,7 +275,7 @@ usuariosController.delete = function(request, response){
 
 usuariosController.listar = function(request, response){
     usuariosModel.listar(null, function(callback){
-        response.json({callback})
+        response.json({callback})        
     })
 }
 
