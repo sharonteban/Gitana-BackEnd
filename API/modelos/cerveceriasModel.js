@@ -42,7 +42,7 @@ cerveceriasModel.guardar = function(post, callback){
 
 cerveceriasModel.update = function(post,callback){
     Mymodel.findOneAndUpdate(
-        { _id: post._id },
+       { _id: post._id },
         { nombre: post.nombre, 
           imagen: post.imagen, 
           precio: post.precio, 
@@ -92,4 +92,5 @@ cerveceriasModel.listarID = function(post, callback){
     })
 }
 
+cerveceriasModel.Mymodel = Mymodel
 module.exports.cerveceriasModel = cerveceriasModel

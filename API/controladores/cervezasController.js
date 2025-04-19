@@ -95,6 +95,7 @@ cervezasController.listar = function(request, response){
 
     cervezasModel.listar(null, function(respuesta){
         response.json(respuesta)
+        
     })
     
 }

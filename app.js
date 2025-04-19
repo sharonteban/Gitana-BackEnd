@@ -28,12 +28,24 @@ app.all('*',function(req, res, next){
 });
  
 
+// base de datos local
+// mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then((respuesta) => {
+//     console.log("conexion correcta a mongo")
+// }).catch((error) => {
+//     console.log(error)
+// }) 
 
-mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then((respuesta) => {
-    console.log("conexion correcta a mongo")
+mongoose.connect("mongodb://" + config.bdUser + ":" + config.bdPass + '@' + config.bdIp + ":" + config.bdPort +  "/" + config.bd).then((respuesta)=>{
+    console.log("Conexion correcta a mongo")
 }).catch((error) => {
     console.log(error)
-}) 
+})
+
+app.use('/', express.static(__dirname + '/dist/front-end/browser'));
+
+app.get('/*', function(req, res, next) {
+    res.sendFile(path.resolve(__dirname + "/dist/front-end/browser/index.html"));
+});
 
 app.use(cors({
     origin: function(origin, callback){

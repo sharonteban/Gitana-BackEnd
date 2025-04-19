@@ -26,19 +26,19 @@ app.post("/usuarios/login", function(request, response){
 
 })
 
-app.put("/usuarios/update", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
+app.put("/usuarios/update",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
     usuariosController.update(request, response)
 })
 
-app.post("/usuarios/delete", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente el dato unico "email" 
+app.post("/usuarios/delete",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente el dato unico "email" 
   usuariosController.delete(request, response) 
 })
 
-app.post("/usuarios/listar", soloAdmin, function(request, response){
+app.post("/usuarios/listar",  function(request, response){
   usuariosController.listar(request, response)  ///
 })
 
-app.post("/usuarios/listarEmail", soloAdmin, function(request, response){
+app.post("/usuarios/listarEmail",  function(request, response){
   usuariosController.listarEmail(request, response)
 })
 
@@ -56,15 +56,15 @@ app.post("/usuarios/logout", function(request, response){
      // cervecerias 
 var cerveceriasController = require("./API/controladores/cerveceriasController.js").cerveceriasController
 
-app.post("/cervecerias/guardar", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
+app.post("/cervecerias/guardar",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
   cerveceriasController.guardar(request, response)
 })
 
-app.post("/cervecerias/update", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
+app.post("/cervecerias/update",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
   cerveceriasController.update(request, response)
 })
 
-app.post("/cervecerias/delete", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente el dato unico "email" 
+app.post("/cervecerias/delete",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente el dato unico "email" 
 cerveceriasController.delete(request, response) 
 })
 
@@ -79,15 +79,15 @@ app.post("/cervecerias/listarID", function(request, response){
   // cervezas 
   var cervezasController = require("./API/controladores/cervezasController.js").cervezasController
 
-  app.post("/cervezas/guardar", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
+  app.post("/cervezas/guardar",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
     cervezasController.guardar(request, response)
   })
   
-  app.post("/cervezas/update", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
+  app.post("/cervezas/update",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente los datos que quiero actualizar. 
     cervezasController.update(request, response)
   })
   
-  app.post("/cervezas/delete", soloAdmin, function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente el dato unico "email" 
+  app.post("/cervezas/delete",  function(request, response){    //con los mismos datos de .post se realizo la busqueda, incluyendo unicamente el dato unico "email" 
   cervezasController.delete(request, response) 
   })
   

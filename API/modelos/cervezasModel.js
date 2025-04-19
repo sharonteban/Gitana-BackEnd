@@ -83,4 +83,5 @@ cervezasModel.listarID = function(post, callback){
     })
 }
 
+cervezasModel.Mymodel = Mymodel
 module.exports.cervezasModel = cervezasModel

@@ -38,6 +38,16 @@ usuariosController.save = function(request, response){
         return false
     }
 
+    if(post.nombre.length < 3){
+        response.json({mensaje:"no es un nombre valido, demaciado corto", state:false})
+        return false
+    }
+
+    if(post.nombre.length > 20){
+        response.json({mensaje:"no es un nombre valido, demaciado largo", state:false})
+        return false
+    }
+
     post.password = sha256(post.password + config.secret)
 
     var letras = ["Z", "F", "P", "Y", "D"]
@@ -75,17 +85,17 @@ usuariosController.save = function(request, response){
                             <label for="codigo" style="display: block; margin-bottom: 8px; font-weight: bold;">Código de Activación:</label>
                             <div id="codigo" name="codigo" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; background: white;">${post.codigo}</div>
                             
-                            <a href="http://localhost:4200/activar/${post.email}/${post.codigo}" style="display: block; width: 100%; text-align: center; background: #007bff; color: white; padding: 10px; border-radius: 4px; text-decoration: none;">Activar Cuenta</a>
+                            <a href="${config.urlreal}/activar/${post.email}/${post.codigo}" style="display: block; width: 100%; text-align: center; background: #007bff; color: white; padding: 10px; border-radius: 4px; text-decoration: none;">Activar Cuenta</a>
                             </form>
                     </body>`
             }
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if(error){
-                    console.log(error)
+                   // console.log(error)
                 }
                 else{
-                    console.log(info)
+                    //console.log(info)
                 }
             })
 
@@ -220,6 +230,16 @@ usuariosController.update = function(request, response){
         response.json({mensaje:"verifica la escritura del correo e intenta de nuevo", state:false})
         return false
     } 
+
+    if(post.nombre.length < 3){
+        response.json({mensaje:"no es un nombre valido, demaciado corto", state:false})
+        return false
+    }
+
+    if(post.nombre.length > 20){
+        response.json({mensaje:"no es un nombre valido, demaciado largo", state:false})
+        return false
+    }
     
 
     usuariosModel.buscarEmail(post, function(callback){
@@ -231,6 +251,7 @@ usuariosController.update = function(request, response){
             
             usuariosModel.update(post, function(callback){
                 if(callback.state == true){
+                    
                     response.json({mensaje:"usuario actualizado correctamente", state:true})
                 }
                 else{
