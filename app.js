@@ -41,11 +41,7 @@ mongoose.connect("mongodb://" + config.bdUser + ":" + config.bdPass + '@' + conf
     console.log(error)
 })
 
-app.use('/', express.static(__dirname + '/dist/front-end/browser'));
 
-app.get('/*', function(req, res, next) {
-    res.sendFile(path.resolve(__dirname + "/dist/front-end/browser/index.html"));
-});
 
 app.use(cors({
     origin: function(origin, callback){
@@ -76,7 +72,12 @@ require("./rutas.js")
 
 app.use("/Avatar", express.static(__dirname + "/Avatar"))
 app.use("/imagenes", express.static(__dirname + "/imagenes"))
-app.use("/", express.static(__dirname + "/pagina"))
+
+app.use('/', express.static(__dirname + '/dist/front-end/browser'));
+
+app.get('/*', function(req, res, next) {
+    res.sendFile(path.resolve(__dirname + "/dist/front-end/browser/index.html"));
+});
 
 app.listen(config.puertoExpress, function(){
     console.log("servidor funcionando por el puerto" + config.puertoExpress)
